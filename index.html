@@ -1,36 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Brecht Opstaele</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brecht Opstaele — Firmware Engineer</title>
+  <meta name="description" content="Firmware Engineer with a focus on STM32/C, automation in Python, and space systems. Projects in OTA for CubeSats, QUIC traffic analysis, and embedded automation." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2740%27 fill=%27%237c3aed%27/%3E%3C/svg%3E" />
+  <meta property="og:title" content="Brecht Opstaele — Firmware Engineer" />
+  <meta property="og:description" content="Embedded systems, automation, and space-inspired projects." />
+  <meta property="og:type" content="website" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Brecht Opstaele",
+    "jobTitle":"Firmware Engineer",
+    "url":"https://brechtopstaele.github.io/",
+    "knowsLanguage":["nl","en","fr","de"]
+  }
+  </script>
 </head>
 <body>
-    <header class="container">
-        <div class="hero">
-            <h1 class="m-0">Brecht Opstaele</h1>
-            <p class="lead mt-1 mb-0">R&D Firmware Engineer at Summa NV.</p>
-        </div>
-    </header>
-    <main class="container grid auto-fit mt-3">
+  <header class="container">
+    <nav class="cluster site-nav">
+      <a class="brand" href="#top">Brecht</a>
+      <div class="cluster">
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#photography">Photography</a>
+        <a href="#contact">Contact</a>
+        <button class="button ghost" id="themeToggle" aria-label="Toggle theme">🌓</button>
+      </div>
+    </nav>
+
+    <section class="hero mt-2">
+      <h1 class="m-0">Brecht Opstaele</h1>
+      <p class="lead mt-1 mb-2">Firmware Engineer • Embedded systems • Automation • Space enthusiast</p>
+      <div class="cluster">
+        <a class="button" href="mailto:brecht.opstaele@hotmail.com">Email</a>
+        <a class="button green" href="https://github.com/brechtopstaele" target="_blank" rel="noopener">GitHub</a>
+        <a class="button cyan" href="https://www.linkedin.com/in/brecht-opstaele/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </section>
+  </header>
+
+  <main id="top">
+    <!-- Experience -->
+    <section id="experience" class="container mt-3">
+      <h2>Experience</h2>
+      <div class="grid auto-fit">
         <article class="card">
-            <div class="title">My Experiences</div>
-            <div class="subtitle">Take a look at my professional experiences.</div>
-            <p>2024-present: R&D Firmware Engineer at Summa NV</p>
-            <p>2023-2024: Advanced Master in Space Studies at KU Leuven</p>
-            <p>2018-2023: Master of Science in Engineering Technology - Electronics-ICT - Smart Applications</p>
-            <a class="button orange" href="https://brechtopstaele.github.io/">View my entire CV</a>
+          <div class="title">R&D Firmware Engineer — Summa NV</div>
+          <div class="subtitle">2024 — present</div>
+          <p>STM32 (C), Python automation, MQTT sensor setup, Azure DevOps pipelines, VMs & Docker, Beckhoff PLC.</p>
         </article>
 
+        <article class="card">
+          <div class="title">Event Photographer — Freelance</div>
+          <div class="subtitle">2018 — present</div>
+          <p>Events from local parties to festivals and clubs.</p>
+        </article>
+
+        <article class="card">
+          <div class="title">Group Leader — Scouts ’t Hoekske</div>
+          <div class="subtitle">2019 — 2024</div>
+          <p>Administration, communication & website; finances; guiding leaders; liaising with the municipality for a new building.</p>
+        </article>
+
+        <article class="card">
+          <div class="title">Student Job — KU Leuven</div>
+          <div class="subtitle">2021</div>
+          <p>Built a math exercise platform using YAML‑like code and LaTeX.</p>
+        </article>
+
+        <article class="card">
+          <div class="title">District Commissioner — Scouts en Gidsen Vlaanderen (Volunteer)</div>
+          <div class="subtitle">2025 — present</div>
+          <p>First‑line support for eight scout groups; organise meetings and cross‑group events.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="container mt-3">
+      <h2>Education</h2>
+      <div class="grid auto-fit">
+        <article class="card">
+          <div class="title">Advanced Master of Space Studies — KU Leuven</div>
+          <div class="subtitle"><span class="badge">Magna cum laude</span> • 2023 — 2024</div>
+          <p>Thesis: Design & implementation of a robust, flexible OTA update system for a 3U CubeSat.</p>
+        </article>
+        <article class="card">
+          <div class="title">Master of Engineering Technology: Electronics & ICT — KU Leuven</div>
+          <div class="subtitle"><span class="badge green">Cum laude</span> • 2018 — 2023</div>
+          <p>Thesis: QUIC traffic analysis to uniquely identify devices and services.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="container mt-3">
+      <h2>Projects</h2>
+      <div class="grid auto-fit">
+        <article class="card">
+          <div class="title">WhatToPack</div>
+          <div class="subtitle">GitHub</div>
+          <p>A simple planner for travel essentials.</p>
+          <div class="cluster">
+            <a class="button" href="https://github.com/brechtopstaele/WhatToPack" target="_blank" rel="noopener">View Repo</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="title">OTA for CubeSats</div>
+          <div class="subtitle">Research</div>
+          <p>Exploration of resilient over‑the‑air strategies tailored to small satellite constraints.</p>
+        </article>
+
+        <article class="card">
+          <div class="title">QUIC Traffic Fingerprinting</div>
+          <div class="subtitle">Research</div>
+          <p>Analyzed device/service identification via QUIC flow features and patterns.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="container mt-3">
+      <h2>Skills</h2>
+      <div class="grid auto-fit">
+        <article class="card">
+          <div class="title">Technical</div>
+          <p class="mb-1">
+            <span class="badge">C / STM32</span>
+            <span class="badge cyan">Python</span>
+            <span class="badge">MQTT</span>
+            <span class="badge orange">Azure DevOps</span>
+            <span class="badge">Docker & VMs</span>
+            <span class="badge green">Beckhoff PLC</span>
+          </p>
+          <p class="text-muted">Embedded development, automation, tooling & CI/CD.</p>
+        </article>
+        <article class="card">
+          <div class="title">Core strengths</div>
+          <p class="mb-1">
+            <span class="badge">Problem solving</span>
+            <span class="badge">Critical thinking</span>
+            <span class="badge">Teamwork</span>
+            <span class="badge">Quick learner</span>
+            <span class="badge">Optimizing & automating</span>
+          </p>
+        </article>
+        <article class="card">
+          <div class="title">Languages</div>
+          <p class="mb-1">
+            <span class="badge">Dutch (native)</span>
+            <span class="badge">English</span>
+            <span class="badge">French</span>
+            <span class="badge">German (basic)</span>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="photography" class="container mt-3">
+        <h2>Photography</h2>
         <article class="card">
             <div class="title">My Photography</div>
             <div class="subtitle">Take a look at my photography and videography services.</div>
             <a class="button" href="https://brechtopstaele.rf.gd">Take a look</a>
         </article>
-    </main>
-    <footer class="container footer center">
-      <span class="badge">© Brecht Opstaele - 2026</span>
-    </footer>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="container mt-3">
+      <h2>Contact</h2>
+      <div class="card">
+        <p class="mb-1">Best way to reach me: <a href="">temp</a></p>
+        <div class="cluster mt-1">
+          <a class="button ghost" href="#top">Back to top ↑</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer center">
+    <span class="badge">v1.0</span>
+    <span class="ml-1">© <span id="year"></span> Brecht Opstaele</span>
+  </footer>
+
+  <script>
+    // Theme toggle (respects system pref by default, allows override)
+    const btn = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    const stored = localStorage.getItem('theme');
+    if (stored) root.dataset.theme = stored;
+    btn.addEventListener('click', () => {
+      const current = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = current;
+      localStorage.setItem('theme', current);
+    });
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
+
