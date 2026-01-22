@@ -128,6 +128,59 @@ a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-ra
   border: 1px solid var(--border); box-shadow: var(--shadow);
 }
 
+/* —— Education Timeline —— */
+.edu-timeline {
+  --line: color-mix(in oklab, var(--accent), #000 12%);
+  --dot: var(--accent);
+  --dot-ring: color-mix(in oklab, var(--accent-3), #fff 30%);
+  --hover: color-mix(in oklab, var(--accent-3), #fff 80%);
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 22px;            /* space for the line/dots */
+  position: relative;
+}
+
+.edu-timeline::before {
+  content: "";
+  position: absolute;
+  left: 10px;                     /* aligns with .edu-dot */
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(var(--line), transparent 70%);
+  border-radius: 2px;
+}
+
+.edu-item { position: relative; margin: var(--space) 0; }
+.edu-item:first-child { margin-top: var(--space-sm); }
+
+.edu-dot {
+  position: absolute;
+  left: -2px;
+  top: 6px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--dot-ring), transparent 55%),
+              var(--dot);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--dot), transparent 75%), var(--shadow);
+  transform: translateX(-50%);
+}
+
+.edu-card { padding: var(--space); }
+.edu-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; margin-bottom: 6px; }
+.edu-meta { color: var(--text-muted); font-weight: 600; }
+
+.edu-thesis { color: var(--text); }
+.edu-thesis strong { color: var(--accent); }
+
+/* Subtle hover accent */
+.edu-card:hover {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--hover), transparent 90%), transparent 80%),
+    var(--bg);
+  border-color: color-mix(in oklab, var(--accent), var(--border) 70%);
+}
+
 /* ——— Footer ——— */
 .footer { margin-top: var(--space-lg); padding-top: var(--space); border-top: 1px solid var(--border); color: var(--text-muted); font-size: .95em }
 
