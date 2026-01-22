@@ -128,57 +128,108 @@ a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-ra
   border: 1px solid var(--border); box-shadow: var(--shadow);
 }
 
-/* —— Education Timeline —— */
-.edu-timeline {
-  --line: color-mix(in oklab, var(--accent), #000 12%);
-  --dot: var(--accent);
-  --dot-ring: color-mix(in oklab, var(--accent-3), #fff 30%);
-  --hover: color-mix(in oklab, var(--accent-3), #fff 80%);
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0 22px;            /* space for the line/dots */
+
+/* ——— Horizontal Education Timeline ——— */
+.edu-h-timeline {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
   position: relative;
+  padding: var(--space) var(--space) calc(var(--space) * 1.2);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--bg-muted), transparent 20%), transparent 70%), var(--bg);
+  box-shadow: var(--shadow);
 }
 
-.edu-timeline::before {
-  content: "";
-  position: absolute;
-  left: 10px;                     /* aligns with .edu-dot */
-  top: 6px;
-  bottom: 6px;
-  width: 2px;
-  background: linear-gradient(var(--line), transparent 70%);
-  border-radius: 2px;
+/* Each segment width ∝ years (set via inline --years) */
+.edu-seg {
+  --seg-color: var(--accent);
+  position: relative;
+  flex: var(--years) 1 0;         /* the magic: proportional width */
+  min-width: 120px;
+  isolation: isolate;             /* keep shadows behind */
+  outline: none;
 }
 
-.edu-item { position: relative; margin: var(--space) 0; }
-.edu-item:first-child { margin-top: var(--space-sm); }
+/* Give each segment a distinct accent using nth-child */
+.edu-seg:nth-child(1) { --seg-color: var(--accent);   } /* purple */
+.edu-seg:nth-child(2) { --seg-color: var(--accent-3); } /* cyan */
+.edu-seg:nth-child(3) { --seg-color: var(--accent-4); } /* green */
 
+/* The straight horizontal line (per segment for easier hover effects) */
+.edu-track {
+  position: absolute; inset: 50% 0 auto 0; height: 4px; transform: translateY(-50%);
+  background: color-mix(in oklab, var(--seg-color), var(--border) 50%);
+  border-radius: 3px;
+}
+
+/* Dots marking start (and final end cap on last segment) */
 .edu-dot {
-  position: absolute;
-  left: -2px;
-  top: 6px;
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, var(--dot-ring), transparent 55%),
-              var(--dot);
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--dot), transparent 75%), var(--shadow);
-  transform: translateX(-50%);
+  position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%);
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--seg-color);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--seg-color), transparent 75%), var(--shadow);
+}
+.edu-dot.end { left: 100%; } /* end of the whole timeline */
+
+/* Small pill always visible; expands into a card on hover/focus */
+.edu-pill {
+  position: absolute; top: calc(50% - 34px); left: 0;
+  transform: translateY(-50%);
+  background: color-mix(in oklab, var(--seg-color), transparent 88%);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
 }
 
-.edu-card { padding: var(--space); }
+/* The expandable info card */
+.edu-card {
+  position: absolute;
+  left: 0; top: calc(50% + 14px);
+  width: min(380px, 86vw);
+  pointer-events: none;
+
+  /* collapsed */
+  max-height: 0;
+  opacity: 0;
+  translate: 0 6px;
+  overflow: clip;
+
+  transition:
+    max-height 220ms ease,
+    opacity 180ms ease,
+    translate 220ms ease;
+}
+
+/* Expand on hover or keyboard focus */
+.edu-seg:hover .edu-card,
+.edu-seg:focus-within .edu-card {
+  pointer-events: auto;
+  max-height: 240px;
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Subtle accent when open */
+.edu-seg:hover .edu-track,
+.edu-seg:focus-within .edu-track {
+  background: linear-gradient(90deg,
+    color-mix(in oklab, var(--seg-color), transparent 15%),
+    color-mix(in oklab, var(--seg-color), transparent 45%));
+}
+
+/* Header and meta inside the card */
 .edu-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; margin-bottom: 6px; }
-.edu-meta { color: var(--text-muted); font-weight: 600; }
+.edu-meta { color: var(--text-muted); font-weight: 600 }
 
-.edu-thesis { color: var(--text); }
-.edu-thesis strong { color: var(--accent); }
-
-/* Subtle hover accent */
-.edu-card:hover {
-  background:
-    linear-gradient(180deg, color-mix(in oklab, var(--hover), transparent 90%), transparent 80%),
-    var(--bg);
-  border-color: color-mix(in oklab, var(--accent), var(--border) 70%);
+/* Responsive: stack pills above the line on narrow screens */
+@media (max-width: 640px) {
+  .edu-pill { top: calc(50% - 42px); }
+  .edu-card { width: min(520px, 96vw) }
 }
 
 /* ——— Footer ——— */
