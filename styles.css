@@ -33,6 +33,12 @@
     --ring: color-mix(in oklab, var(--accent), #000 45%);
   }
 }
+
+:root[data-theme="light"] {
+  --bg: #ffffff; --bg-muted: #f6f7fb; --text: #111216; --text-muted: #5c6270;
+  --border: #e6e8f0; --shadow: 0 2px 10px rgba(17,18,22,.07);
+  --ring: color-mix(in oklab, var(--accent), #fff 40%);
+}
 :root[data-theme="dark"] {
   --bg: #0b0c10; --bg-muted: #12131a; --text: #f4f6fb; --text-muted: #a6adc8;
   --border: #242633; --shadow: 0 2px 16px rgba(0,0,0,.5);
