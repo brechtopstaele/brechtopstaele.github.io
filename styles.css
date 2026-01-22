@@ -69,7 +69,7 @@ h1 { font-size: var(--fs-3) } h2 { font-size: var(--fs-2) } h3 { font-size: var(
 p { margin: 0 0 var(--space-sm) }
 
 /* ——— Links ——— */
-a { color: var(--link); text-decoration: none; position: relative }
+a { color: var(--text); text-decoration: none; position: relative }
 a::after { content:""; position:absolute; left:0; bottom:-2px; width:100%; height:2px;
   background: linear-gradient(90deg, var(--accent), var(--accent-3));
   transform: scaleX(0); transform-origin:left; transition: transform .22s ease }
