@@ -132,9 +132,11 @@ a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-ra
 
 .edu-h-timeline {
   display: flex;
-  gap: var(--space);
+  margin-top: var(--space);
+  margin-bottom: var(--space);
   align-items: center;
-  padding: calc(var(--space-lg)*1.5) var(--space) var(--space-lg);
+  padding-top: 50px;
+  padding-bottom: 130px;
   border: 1px solid var(--border);
   border-radius: 18px;
   background: linear-gradient(180deg, color-mix(in oklab, var(--bg-muted), transparent 20%), transparent 70%), var(--bg);
@@ -213,6 +215,7 @@ a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-ra
   font-weight: 700;
   box-shadow: var(--shadow);
   z-index: 4;
+  white-space: nowrap;
 }
 
 /* Expandable card */
