@@ -128,13 +128,13 @@ a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-ra
   border: 1px solid var(--border); box-shadow: var(--shadow);
 }
 
-
 /* ——— Horizontal Education Timeline ——— */
 .edu-h-timeline {
   display: flex;
   gap: var(--space-sm);
   align-items: center;
   position: relative;
+  margin-top: 40px;
   padding: var(--space) var(--space) calc(var(--space) * 1.2);
   border: 1px solid var(--border);
   border-radius: 18px;
