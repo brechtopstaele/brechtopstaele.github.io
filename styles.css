@@ -270,7 +270,7 @@ a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-ra
   .edu-track {
     top: 0;
     bottom: 0;
-    left: 50%;
+    left: 90%;
     right: auto;
     width: 4px;
     height: 100%;
@@ -279,12 +279,12 @@ a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-ra
 
   .edu-dot {
     top: 0;
-    left: 50%;
+    left: 90%;
     transform: translate(-50%, -50%);
   }
   .edu-dot.end {
     top: 100%;
-    left: 50%;
+    left: 90%;
     transform: translate(-50%, -50%);
   }
 
