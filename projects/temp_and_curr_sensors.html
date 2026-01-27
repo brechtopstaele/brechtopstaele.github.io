@@ -1,115 +1,221 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>ESP32 Temperature & Current Sensor Network</title>
-    <link rel="stylesheet" href="../styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brecht Opstaele — Firmware Engineer</title>
+  <meta name="description" content="Firmware Engineer with a focus on STM32/C, automation in Python, and space systems. Projects in OTA for CubeSats, QUIC traffic analysis, and embedded automation." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2740%27 fill=%27%237c3aed%27/%3E%3C/svg%3E" />
+  <meta property="og:title" content="Brecht Opstaele — Firmware Engineer" />
+  <meta property="og:description" content="Embedded systems, automation, devOps and fascination for space." />
+  <meta property="og:type" content="website" />
 </head>
 
 <body>
+    <header class="container">
+        <nav class="cluster site-nav">
+        <div class="cluster">
+            <span class="badge"><a href="#experience">Experience</a></span>
+            <span class="badge"><a href="#education">Education</a></span>
+            <span class="badge"><a href="#projects">Projects</a></span>
+            <span class="badge"><a href="#skills">Skills</a></span>
+            <span class="badge"><a href="#photography">Photography</a></span>
+            <button class="button ghost" id="themeToggle" aria-label="Toggle theme">🌓</button>
+        </div>
+        </nav>
+    </header>
 
-<header>
-    <h1>ESP32 Temperature & Current Sensor Network (Tasmota)</h1>
-</header>
+<main id="top">
+    <section id="introduction" class="container mt-3">
+        <h2>Introduction</h2>
+        <p>
+        This project uses M5Stack Atom Lite ESP32 modules running Tasmota to collect
+        accurate temperature and current measurements. Data is published over MQTT to 
+        a Mosquitto broker and placed in an InfluxDB database for visualization in Grafana.
+        </p>
+        <div class="grid auto-fit">
+            <article class="card">
+            <div class="title">R&D Firmware Engineer — Summa NV</div>
+            <div class="subtitle">2024 — present</div>
+            <p>STM32 (C), Python automation, MQTT sensor setup, Azure DevOps pipelines, VMs & Docker, Beckhoff PLC.</p>
+            </article>
+        </div>
+    </section>
 
-<main>
+    <section id="hardware" class="container mt-3">
+      <h2>Hardware setup</h2>
+      <div class="grid auto-fit">
+        <article class="card">
+          <div class="title">Temperature sensors</div>
+          <div class="subtitle">DS18B20</div>
+          <p>
+            For the temperature sensors, we used DS18B20 sensors that came with a board with the required resistor for 
+            the data line. These sensors are connected using the 1-Wire protocol to a GPIO pin on the ESP32. With the 
+            M5Stack Atom Lite, we can plug this terminal in directly as shown below. In our case, we used three sensors 
+            in a single terminal block, so we had to solder the wires together first with a little bit of solder to make 
+            it easier to get them into the terminal block. This is the only hardware setup needed.
+          </p>
+        </article>
+        <article class="card">
+          <div class="title">Current sensors</div>
+          <div class="subtitle">ACS712 with ADS1115</div>
+          <p>
+            For the current sensors, we used ACS712 sensors with an ADS1115 ADC. The ACS712 sensors output an analog voltage
+            proportional to the current flowing through them. The ADS1115 ADC is used to convert this analog voltage to a 
+            digital value that can be read by the ESP32. 
 
-<p>
-This project uses <strong>ESP32 modules</strong> running <strong>Tasmota</strong> to collect
-accurate <strong>temperature</strong> and <strong>AC current</strong> measurements.  
-Data is published via MQTT and can be displayed in Home Assistant, Grafana, or similar dashboards.
+            In this setup, we soldered the connectors to the ADS1115 board and used a breadboard to connect everything together.
+            The ACS712 sensors are connected to the ADS1115, which is then connected to the ESP32 via I2C. We built three setups, 
+            one with two 5A sensors, one with two 20A sensors, and one with two 30A sensors. 
+
+            Below is a picture of the setup with the ADS1115 and two ACS712 sensors connected to the M5Stack Atom Lite. We connected 
+            the A3 input pin of the ADS1115 to the Vcc rail to correctly calculate the current later on.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="docker" class="container mt-3">
+      <h2>Mosquitto, Grafana and influxDB setup with Docker</h2>
+      <p>
+        To set up the Mosquitto broker, InfluxDB database, and Grafana visualization tool, we used Docker Compose. 
+        This allows us to easily manage and deploy the different services needed for our project. Below is the 
+        Docker Compose file we used to set up everything.
+      </p>
+      <div class="grid auto-fit">
+        <article class="card">
+          <div class="title">compose.yaml</div>
+          <p>
+            services:
+                influxdb:
+                    image: influxdb:1.11
+                    container_name: influxdb
+                    restart: unless-stopped
+                    ports:
+                    - "8086:8086"
+                    volumes:
+                    - ./influxdb:/var/lib/influxdb
+                    environment:
+                    INFLUXDB_DB: ${INFLUXDB_DB:-mydb}
+                    INFLUXDB_USER: ${INFLUXDB_USER:-myuser}
+                    INFLUXDB_USER_PASSWORD: ${INFLUXDB_USER_PASSWORD:-mypassword}
+
+                grafana:
+                    image: grafana/grafana:latest
+                    container_name: grafana
+                    restart: unless-stopped
+                    ports:
+                    - "3000:3000"
+                    volumes:
+                    - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+                    - grafana:/var/lib/grafana
+                    environment:
+                    GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER:-admin}
+                    GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:-admin}
+                    depends_on:
+                    - influxdb
+
+                nodered:
+                    image: nodered/node-red:latest
+                    container_name: nodered
+                    restart: unless-stopped
+                    ports:
+                    - "1880:1880"
+                    volumes:
+                    - ./nodered:/data
+                    environment:
+                    - NODE_RED_ENABLE_SAFE_MODE=true
+                    - NODE_RED_ENABLE_PROJECTS=true
+                    depends_on:
+                    - influxdb
+                    - grafana
+
+                mqtt:
+                    image: eclipse-mosquitto:latest
+                    container_name: mqtt
+                    restart: unless-stopped
+                    ports:
+                    - "1883:1883"
+                    - "8884:8884"
+                    - "9001:9001"
+                    volumes:
+                    - ./mqtt/config:/mosquitto/config
+                    - ./mqtt/data:/mosquitto/data
+                    - ./mqtt/log:/mosquitto/log
+                    - ./mqtt/certs:/mosquitto/certs:ro
+                
+                volumes:
+                    influxdb:
+                    grafana:
+                    nodered:
+                    mqtt:
+            </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="tasmota" class="container mt-3">
+      <h2>Tasmota setup</h2>
+      <p>
+        For the ESP32 firmware, we used Tasmota, an open-source firmware for ESP8266/ESP32 devices. 
+        Tasmota provides a web interface for easy configuration and supports MQTT out of the box.
+
+
+    </p>
+      <div class="grid auto-fit">
+        <article class="card">
+          <div class="title">Temperature setup</div>
+          <p>Tasmota Configuration: 
+	- Logging -> Telemetry period: 10
+	- Other -> Device name: TempX
+	- Module -> GPIO25: DS18X20
+	- MQTT -> Host: 192.168.10.25, Topic: TempSens/TempX
+With X := 1,2,3</p>
+        </article>
+
+        <article class="card">
+          <div class="title">Current setup</div>
+          <p>Tasmota Configuration:
+	- Logging -> Telemetry period: 10
+	- Other -> Device name: Current XA
+	- Module -> GPIO21: I2C SDA, GPIO25: I2C SCL
+	- MQTT -> Host: 192.168.10.25, Topic: CurrSens/XA
+With X := 5,20,30
+
+In console: 
+	- Rule1 ON ADS1115#A0 DO Var1 %value% ENDON ON ADS1115#A1 DO Var2 %value% ENDON ON ADS1115#A2 DO Var3 %value% ENDON ON ADS1115#A3 DO Publish tele/CurrSens/5A {"A0": %Var1%, "A1": %Var2%, "A2": %Var3%, "A3": %value%} ENDON
+	- Rule1 ON ADS1115#A0 DO Var1 %value% ENDON ON ADS1115#A1 DO Var2 %value% ENDON ON ADS1115#A2 DO Var3 %value% ENDON ON ADS1115#A3 DO Publish tele/CurrSens/20A {"A0": %Var1%, "A1": %Var2%, "A2": %Var3%, "A3": %value%} ENDON
+	- Rule1 ON ADS1115#A0 DO Var1 %value% ENDON ON ADS1115#A1 DO Var2 %value% ENDON ON ADS1115#A2 DO Var3 %value% ENDON ON ADS1115#A3 DO Publish tele/CurrSens/30A {"A0": %Var1%, "A1": %Var2%, "A2": %Var3%, "A3": %value%} ENDON
+	- Rule1 1
 </p>
-
-<hr>
-
-<h2>Objectives</h2>
-<ul>
-    <li>Measure temperature (DS18B20, BME280, or SHT31)</li>
-    <li>Measure AC current safely using isolated sensors</li>
-    <li>Publish data over MQTT with a stable topic structure</li>
-    <li>Provide OTA updates and reliable 24/7 operation</li>
-</ul>
-
-<h2>System Architecture</h2>
-<pre>
-[Temp/Current Sensors] → [ESP32 (Tasmota)] → MQTT → Broker
-                                               ↘
-                                                Home Assistant / Grafana
-</pre>
-
-<h2>Hardware</h2>
-
-<h3>Temperature Sensors</h3>
-<ul>
-    <li>DS18B20 (1‑Wire)</li>
-    <li>BME280 / SHT31 (I²C)</li>
-</ul>
-
-<h3>Current Sensors</h3>
-<ul>
-    <li>SCT‑013‑000 (non‑intrusive, isolated)</li>
-    <li>ACS712 / ACS758 / ACS770</li>
-</ul>
-
-<h3>Wiring Example</h3>
-<pre>
-ESP32 3V3 ── 4.7kΩ ──┬── DS18B20 Data (GPIO4)
-                     └── GPIO4
-GND ────────────────┴── GND
-3V3 ─────────────────── VDD
-
-SCT‑013‑000 → burden resistor → RC filter → 1.65 V bias → ESP32 ADC (GPIO36)
-</pre>
-
-<h2>Tasmota Template</h2>
-<pre>
-{
-  "NAME": "ESP32-TEMP-CURR",
-  "GPIO":[0,0,0,0,0,0,0,0,0,672,0,0,0,0,0,0,608],
-  "FLAG":0,
-  "BASE":1
-}
-</pre>
-
-<h2>MQTT Sensor Example</h2>
-<pre>
-{
-  "Time": "2026-01-27T12:00:00",
-  "DS18B20": { "Id": "28-3C01D6071A", "Temperature": 22.8 },
-  "ANALOG":  { "A0": 1.23 }
-}
-</pre>
-
-<h2>Home Assistant Integration</h2>
-
-<p><strong>Automatic Discovery:</strong></p>
-<pre>SetOption19 1</pre>
-
-<p><strong>Manual YAML example:</strong></p>
-<pre>
-sensor:
-  - platform: mqtt
-    name: "TempCurr01 Temperature"
-    state_topic: "tele/TempCurr01/SENSOR"
-    value_template: "{{ value_json.DS18B20.Temperature }}"
-</pre>
-
-<h2>Bill of Materials</h2>
-<ul>
-    <li>ESP32 DevKitC / C3 / S3</li>
-    <li>DS18B20 sensor</li>
-    <li>SCT‑013‑000 CT clamp</li>
-    <li>Burden resistor + RC filter</li>
-    <li>5V PSU + 3.3V regulator</li>
-    <li>Enclosure + cable glands</li>
-</ul>
-
+        </article>
+      </div>
+    </section>
 </main>
 
 <footer>
     <p><a href="../index.html">← Back to Home</a></p>
 </footer>
 
+  <footer class="container footer center">
+    <span class="badge">v1.0</span>
+    <span class="ml-1">© <span id="year"></span> Brecht Opstaele</span>
+  </footer>
+
+  <script>
+    // Theme toggle (respects system pref by default, allows override)
+    const btn = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    const stored = localStorage.getItem('theme');
+    if (stored) root.dataset.theme = stored;
+    btn.addEventListener('click', () => {
+      const current = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = current;
+      localStorage.setItem('theme', current);
+    });
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
