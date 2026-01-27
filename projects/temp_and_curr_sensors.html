@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ESP32 Temperature & Current Sensor Network</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+<header>
+    <h1>ESP32 Temperature & Current Sensor Network (Tasmota)</h1>
+</header>
+
+<main>
+
+<p>
+This project uses <strong>ESP32 modules</strong> running <strong>Tasmota</strong> to collect
+accurate <strong>temperature</strong> and <strong>AC current</strong> measurements.  
+Data is published via MQTT and can be displayed in Home Assistant, Grafana, or similar dashboards.
+</p>
+
+<hr>
+
+<h2>Objectives</h2>
+<ul>
+    <li>Measure temperature (DS18B20, BME280, or SHT31)</li>
+    <li>Measure AC current safely using isolated sensors</li>
+    <li>Publish data over MQTT with a stable topic structure</li>
+    <li>Provide OTA updates and reliable 24/7 operation</li>
+</ul>
+
+<h2>System Architecture</h2>
+<pre>
+[Temp/Current Sensors] → [ESP32 (Tasmota)] → MQTT → Broker
+                                               ↘
+                                                Home Assistant / Grafana
+</pre>
+
+<h2>Hardware</h2>
+
+<h3>Temperature Sensors</h3>
+<ul>
+    <li>DS18B20 (1‑Wire)</li>
+    <li>BME280 / SHT31 (I²C)</li>
+</ul>
+
+<h3>Current Sensors</h3>
+<ul>
+    <li>SCT‑013‑000 (non‑intrusive, isolated)</li>
+    <li>ACS712 / ACS758 / ACS770</li>
+</ul>
+
+<h3>Wiring Example</h3>
+<pre>
+ESP32 3V3 ── 4.7kΩ ──┬── DS18B20 Data (GPIO4)
+                     └── GPIO4
+GND ────────────────┴── GND
+3V3 ─────────────────── VDD
+
+SCT‑013‑000 → burden resistor → RC filter → 1.65 V bias → ESP32 ADC (GPIO36)
+</pre>
+
+<h2>Tasmota Template</h2>
+<pre>
+{
+  "NAME": "ESP32-TEMP-CURR",
+  "GPIO":[0,0,0,0,0,0,0,0,0,672,0,0,0,0,0,0,608],
+  "FLAG":0,
+  "BASE":1
+}
+</pre>
+
+<h2>MQTT Sensor Example</h2>
+<pre>
+{
+  "Time": "2026-01-27T12:00:00",
+  "DS18B20": { "Id": "28-3C01D6071A", "Temperature": 22.8 },
+  "ANALOG":  { "A0": 1.23 }
+}
+</pre>
+
+<h2>Home Assistant Integration</h2>
+
+<p><strong>Automatic Discovery:</strong></p>
+<pre>SetOption19 1</pre>
+
+<p><strong>Manual YAML example:</strong></p>
+<pre>
+sensor:
+  - platform: mqtt
+    name: "TempCurr01 Temperature"
+    state_topic: "tele/TempCurr01/SENSOR"
+    value_template: "{{ value_json.DS18B20.Temperature }}"
+</pre>
+
+<h2>Bill of Materials</h2>
+<ul>
+    <li>ESP32 DevKitC / C3 / S3</li>
+    <li>DS18B20 sensor</li>
+    <li>SCT‑013‑000 CT clamp</li>
+    <li>Burden resistor + RC filter</li>
+    <li>5V PSU + 3.3V regulator</li>
+    <li>Enclosure + cable glands</li>
+</ul>
+
+</main>
+
+<footer>
+    <p><a href="../index.html">← Back to Home</a></p>
+</footer>
+
+</body>
+</html>
