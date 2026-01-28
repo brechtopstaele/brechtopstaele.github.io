@@ -1,0 +1,13 @@
+
+# Use Kramdown (default) with GitHub Flavored Markdown input
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# Optional: enable Rouge syntax highlighting for fenced code blocks
+highlighter: rouge
+
+# If you’re using only custom HTML/CSS and no external Jekyll theme:
+# (Leave `theme:` unset)
+# Otherwise, to use a GitHub Pages theme:
+# theme: jekyll-theme-minimal
