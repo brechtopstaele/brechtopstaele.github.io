@@ -20,11 +20,11 @@ For the temperature sensors, we used DS18B20 sensors that came with a board with
 
 The setup is shown in the image below:
 
-![alt text](../static/images/temp_sens.png)
+![alt text](/static/images/temp_sens.png)
 
 A closeup of the sensor:
 
-![alt text](../static/images/temp_sens_closeup.png)
+![alt text](/static/images/temp_sens_closeup.png)
 
 ### Current Sensors
 
@@ -38,7 +38,7 @@ Below is a picture of the setup with the ADS1115 and two ACS712 sensors connecte
 
 The setup is shown below:
 
-![alt text](../static/images/curr_sens.png)
+![alt text](/static/images/curr_sens.png)
 
 ## Mosquitto, Grafana and InfluxDB Setup with Docker
 
@@ -251,6 +251,6 @@ The temperature data requires minimal processing since the DS18B20 sensors provi
 
 After this, you can create Grafana dashboards with the available data. An example is shown below.
 
-![alt text](../static/images/grafana_dashboard.png)
+![alt text](/static/images/grafana_dashboard.png)
 
 ---
