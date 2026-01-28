@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Reuse your existing stylesheet -->
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="container">
+    <nav class="cluster site-nav">
+      <div class="cluster">
+        <span class="badge"><a href="/index.html#experience">Experience</a></span>
+        <span class="badge"><a href="/index.html#education">Education</a></span>
+        <span class="badge"><a href="/index.html#projects">Projects</a></span>
+        <span class="badge"><a href="/index.html#skills">Skills</a></span>
+        <span class="badge"><a href="/index.html#photography">Photography</a></span>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top" class="container mt-3">
+    {{ content }}
+  </main>
+
+  <footer class="container footer center">
+    <span class="badge">v1.1</span>
+    <span class="ml-1">© {{ site.time | date: "%Y" }} Brecht Opstaele</span>
+  </footer>
+</body>
+</html>
