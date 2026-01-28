@@ -10,11 +10,6 @@ permalink: /projects/temp-and-curr-sensors/
 
 This project uses M5Stack Atom Lite ESP32 modules running Tasmota to collect accurate temperature and current measurements. Data is published over MQTT to a Mosquitto broker and placed in an InfluxDB database for visualization in Grafana.
 
-### R&D Firmware Engineer — Summa NV
-**2024 — present**
-
-STM32 (C), Python automation, MQTT sensor setup, Azure DevOps pipelines, VMs & Docker, Beckhoff PLC.
-
 ## Hardware Setup
 
 ### Temperature Sensors
@@ -22,6 +17,14 @@ STM32 (C), Python automation, MQTT sensor setup, Azure DevOps pipelines, VMs & D
 **DS18B20**
 
 For the temperature sensors, we used DS18B20 sensors that came with a board with the required resistor for the data line. These sensors are connected using the 1-Wire protocol to a GPIO pin on the ESP32. With the M5Stack Atom Lite, we can plug this terminal in directly as shown below. In our case, we used three sensors in a single terminal block, so we had to solder the wires together first with a little bit of solder to make it easier to get them into the terminal block. This is the only hardware setup needed.
+
+The setup is shown in the image below:
+
+![alt text](temp_sens.png)
+
+A closeup of the sensor:
+
+![alt text](temp_sens_closeup.png)
 
 ### Current Sensors
 
@@ -32,6 +35,10 @@ For the current sensors, we used ACS712 sensors with an ADS1115 ADC. The ACS712 
 In this setup, we soldered the connectors to the ADS1115 board and used a breadboard to connect everything together. The ACS712 sensors are connected to the ADS1115, which is then connected to the ESP32 via I2C. We built three setups, one with two 5A sensors, one with two 20A sensors, and one with two 30A sensors.
 
 Below is a picture of the setup with the ADS1115 and two ACS712 sensors connected to the M5Stack Atom Lite. We connected the A3 input pin of the ADS1115 to the Vcc rail to correctly calculate the current later on.
+
+The setup is shown below:
+
+![alt text](curr_sens.png)
 
 ## Mosquitto, Grafana and InfluxDB Setup with Docker
 
@@ -105,6 +112,35 @@ volumes:
   mqtt:
 ```
 
+### SMTP relay
+
+You can also add an microsoft-graph-smtp-relay Docker container to connect Grafana reporting to an enterprise Microsoft Graph API for emailing.
+
+Add the following to compose.yaml under the grafana environment variables:
+
+```yaml
+      GF_SMTP_ENABLED: true
+      GF_SMTP_HOST: smtp_relay:25
+      GF_SMTP_FROM_ADDRESS: "example@example.com"
+      GF_SMTP_SKIP_VERIFY: true
+```
+
+And add the following to the bottom of compose.yaml, but before the volumes declaration:
+```yaml
+  smtp_relay:
+    image: ggpwnkthx/microsoft-graph-smtp-relay
+    container_name: logging_smtp_relay
+    environment:
+      AUTHORITY: "https://login.microsoftonline.com/<tentant_id>"
+      CLIENT_ID: "<client_id>"
+      CLIENT_SECRET: "<client_secret>"
+    restart: unless-stopped
+    ports:
+    - 2525:25
+```
+
+In the Microsoft Graph API, the permissions Mail.Send, Mail.ReadWrite and User.Read are needed.
+
 ## Tasmota Setup
 
 For the ESP32 firmware, we used Tasmota, an open-source firmware for ESP8266/ESP32 devices. Tasmota provides a web interface for easy configuration and supports MQTT out of the box.
@@ -118,7 +154,7 @@ The temperature sensors require minimal configuration in Tasmota. Here's the ste
 - **Other** → Device name: TempX (where X is 1, 2, or 3 for each sensor)
 - **Module** → Assign GPIO25 to DS18X20 (this is the 1-Wire protocol pin for temperature sensors)
 - **MQTT** → Configure:
-  - Host: 192.168.10.25 (your Mosquitto broker address)
+  - Host: IP address of the Mosquitto broker
   - Topic: TempSens/TempX (where X matches the device number)
 
 The temperature readings will be automatically published to the MQTT broker at the configured interval.
@@ -134,7 +170,7 @@ The current sensors require more configuration due to the need to read multiple 
   - GPIO21: I2C SDA (data line for ADS1115 communication)
   - GPIO25: I2C SCL (clock line for ADS1115 communication)
 - **MQTT** → Configure:
-  - Host: 192.168.10.25
+  - Host: IP address of the Mosquitto broker
   - Topic: CurrSens/XA (where X matches the sensor range)
 
 **Console Rules:**
@@ -185,7 +221,7 @@ For the current sensors, Node-RED performs the following operations:
 **Data Transformation:**
 - Extract the individual channel values (A0, A1, A2) which represent the analog voltage readings from the ACS712 sensors
 - Extract the A3 value, which is the Vcc reference voltage reading
-- Convert the raw ADC values to actual current readings using the formula: `Current = (Channel Value / A3 Value) * Sensitivity`
+- Convert the raw ADC values to actual current readings using the formula: `Current = ((Channel Value - (A3 Value / 2)) / A3 Value) * (Sensitivity * 2)`
 - The A3 value is critical for accurate current calculation because it normalizes the readings against the reference voltage
 
 **InfluxDB Storage:**
@@ -210,6 +246,11 @@ For the temperature sensors, Node-RED performs simpler operations:
 
 The temperature data requires minimal processing since the DS18B20 sensors provide direct temperature readings that don't need conversion or normalization.
 
----
 
-© Brecht Opstaele
+## Grafana dashboard
+
+After this, you can create Grafana dashboards with the available data. An example is shown below.
+
+![alt text](grafana_dashboard.png)
+
+---
