@@ -82,6 +82,8 @@ a::after { content:""; position:absolute; left:0; bottom:-2px; width:100%; heigh
 a:hover::after, a:focus-visible::after { transform: scaleX(1) }
 a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-radius: 4px }
 
+img { max-width: 100%; }
+
 /* ——— Buttons ——— */
 .button {
   --btn-bg: var(--accent); --btn-fg: #fff;
