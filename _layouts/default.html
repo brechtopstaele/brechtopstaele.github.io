@@ -10,13 +10,25 @@
 </head>
 <body>
   <header class="container">
-    <nav class="cluster site-nav">
-      <div class="cluster">
-        <span class="badge"><a href="/index.html#experience">Experience</a></span>
-        <span class="badge"><a href="/index.html#education">Education</a></span>
-        <span class="badge"><a href="/index.html#projects">Projects</a></span>
-        <span class="badge"><a href="/index.html#skills">Skills</a></span>
-        <span class="badge"><a href="/index.html#photography">Photography</a></span>
+    <!-- Navigation Bar -->
+    <nav class="bo-nav" aria-label="Primary">
+      <div class="bo-nav__inner">
+        <!-- Site brand (optional) -->
+        <a class="bo-nav__brand" href="/index.html">Brecht Opstaele</a>
+
+        <!-- Mobile menu toggle (no JS; pure CSS) -->
+        <input type="checkbox" id="bo-nav-toggle" class="bo-nav__toggle" aria-label="Toggle menu">
+        <label for="bo-nav-toggle" class="bo-nav__hamburger" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </label>
+
+        <!-- Menu links -->
+        <ul class="bo-nav__links">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/index.html">About Me</a></li>
+          <li><a href="/index.html#projects/" class="bo-tab bo-tab--active">Projects</a></li>
+          <li><a href="/index.html#photography/">Photography</a></li>
+        </ul>
       </div>
     </nav>
   </header>
