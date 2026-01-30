@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ESP32 Temperature & Current Sensors (Tasmota)
+title: ESP32 Temperature & Current Sensors with Grafana container
 permalink: /projects/temp-and-curr-sensors/
 ---
 
