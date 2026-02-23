@@ -106,6 +106,19 @@ a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-ra
 
 img { max-width: 100%; }
 
+/* ——— Image card with overlay text ——— */
+.image-container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
 /* ——— Navigation ——— */
 
 /* Outer nav */
