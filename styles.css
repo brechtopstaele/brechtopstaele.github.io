@@ -109,14 +109,16 @@ img { max-width: 100%; }
 /* ——— Image card with overlay text ——— */
 .image-container {
   position: relative;
-  text-align: center;
-  color: white;
+  color: black;
 }
 
 .image-overlay {
   position: absolute;
   top: 8px;
   left: 16px;
+}
+.image-overlay.subtitle {
+  color: black;
 }
 
 /* ——— Navigation ——— */
