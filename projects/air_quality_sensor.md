@@ -34,38 +34,78 @@ A fully waterproof DS18B20 probe with a 10 m cable measures pond water tempera
 Why DS18B20 works well here:
 
 - 1‑Wire allows long cable runs
-- Excellent digital noise resilience
-- Tasmota natively supports multi‑sensor setups
 - Waterproof stainless steel housing is reliable outdoors
 
-## Tasmota Configuration
+## ESPHome Configuration
 
-Once Tasmota is flashed onto the ESP32:
+In ESPHome, click Install to flash the ESP32.
+Once it connects to WiFi, ESPHome will notify Home Assistant.
 
-### I²C (BME680)
+Below is an example yaml configuration:
 
-Assign the ESP32 pins used for I²C, such as:
+```yaml
+esphome:
+  name: esp32-sensors
+  friendly_name: ESP32 Sensors
 
-- SDA → GPIO21
-- SCL → GPIO22
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
 
-Tasmota automatically detects the BME680 on the bus after a restart.
-In the Tasmota web interface, the environmental readings appear under the SENSOR page and are published automatically via MQTT.
-You typically get values like:
+# Enable WiFi
+wifi:
+  ssid: "YOUR_WIFI"
+  password: "YOUR_PASSWORD"
 
-- BME680.Temperature
-- BME680.Humidity
-- BME680.Pressure
-- BME680.Gas
+# Logging
+logger:
 
-The Gas value is in ohms and reflects VOC concentration indirectly — lower resistance generally indicates poorer air quality. Tasmota does not compute IAQ directly but provides raw values that Home Assistant can use for trends and alerting.
+# API for Home Assistant
+api:
+  encryption:
+    key: "YOUR_API_KEY"
 
-### DS18B20
+ota:
 
-Set the pin used for the 1‑Wire bus (for example GPIO25).
-Tasmota identifies each DS18B20 by its unique ROM ID, ensuring stable identification even with long‑cable probes outdoors.
+# I2C for BME688
+i2c:
+  sda: 21
+  scl: 22
+  scan: true
+  id: bus_a
 
-Both sensors are automatically included in the standard Tasmota telemetry messages.
+# BME688 Sensor
+bme680_bsec:
+  address: 0x76
+  i2c_id: bus_a
+
+sensor:
+  - platform: bme680_bsec
+    temperature:
+      name: "BME688 Temperature"
+    pressure:
+      name: "BME688 Pressure"
+    humidity:
+      name: "BME688 Humidity"
+    gas_resistance:
+      name: "BME688 Gas Resistance"
+    iaq:
+      name: "BME688 IAQ"
+    co2_equivalent:
+      name: "BME688 CO2 Equivalent"
+    breath_voc_equivalent:
+      name: "BME688 Breath VOC"
+
+# DS18B20 on GPIO4
+  - platform: ds18b20
+    pin: 4
+    update_interval: 10s
+    address: AUTO
+    name: "DS18B20 Temperature"
+```
+
+The Bosch library for using the BME688 is included automatically and allows us to use the estimated IAQ, CO2 equivalent and VOC equivalent.
 
 ## Home Assistant on Proxmox
 
@@ -78,7 +118,13 @@ The Proxmox installation is really straightforward, you create a bootable USB dr
 
 ### Home Assistant
 
-Installing Home Assistant is also a hassle-free process. After adding the Tasmota integration and creating a user for Tasmota, you only need to enter the IP address of the Home Assistant VM and the user credentials and the ESP32 shows up automatically with the BME680 and DS18B20 data as sensors. 
+Install ESPHome
+Go to Settings → Devices & Services
+You will see a popup: “New ESPHome device found”
+Click Configure
+Approve and finish setup
+
+All sensors (BME688 data + DS18B20 temperature) will automatically appear as entities.
 
 With this data, you are able to create some nice dashboards.
 
