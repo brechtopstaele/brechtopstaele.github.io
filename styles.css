@@ -106,29 +106,6 @@ a:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-ra
 
 img { max-width: 100%; }
 
-/* ——— Image card with overlay text ——— */
-.image-container {
-  position: relative;
-  color: black;
-}
-
-.image-overlay {
-  position: absolute;
-  top: 8px;
-  left: 16px;
-}
-.image-overlay .subtitle {
-  color: black;
-}
-.image-overlay .button {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
 /* ——— Navigation ——— */
 
 /* Outer nav */
@@ -279,6 +256,29 @@ img { max-width: 100%; }
 .card .title { font-weight: 700; font-size: var(--fs-1); margin-bottom: 6px }
 .card .subtitle { color: var(--text-muted); margin-bottom: var(--space-sm) }
 .text-muted { color: var(--text-muted) }
+
+/* ——— Image card with overlay text ——— */
+.image-container {
+  position: relative;
+  color: black;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+.image-overlay .subtitle {
+  color: black;
+}
+.image-overlay .button {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
 
 /* ——— Badges ——— */
 .badge {
