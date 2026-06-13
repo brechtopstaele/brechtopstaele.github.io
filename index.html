@@ -6,7 +6,7 @@
   <title>Brecht Opstaele — Firmware Engineer</title>
   <meta name="description" content="Firmware Engineer with a focus on STM32/C, automation in Python, and space systems. Projects in OTA for CubeSats, QUIC traffic analysis, and embedded automation." />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2740%27 fill=%27%237c3aed%27/%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2740%27 fill=%27%23c8f060%27/%3E%3C/svg%3E" />
   <meta property="og:title" content="Brecht Opstaele — Firmware Engineer" />
   <meta property="og:description" content="Embedded systems, automation, devOps and fascination for space." />
   <meta property="og:type" content="website" />
@@ -24,7 +24,11 @@
   </script>
 </head>
 <body>
-  <header class="container">
+  <div id="boot-loader" aria-hidden="true">
+    <span class="boot-mark">Brecht Opstaele</span>
+  </div>
+
+  <header class="container reveal" style="--reveal-delay: 0.05s">
     <!-- Navigation Bar -->
     <nav class="bo-nav" aria-label="Primary">
       <div class="bo-nav__inner">
@@ -50,6 +54,7 @@
     <section class="hero mt-2">
       <h1 class="m-0">Brecht Opstaele</h1>
       <p class="lead mt-1 mb-2">Firmware Engineer • Embedded systems • Automation • Space enthusiast</p>
+      <p class="about-text mb-2">I build and automate embedded systems — from STM32 firmware and MQTT sensor networks to CI/CD pipelines — with a background in space systems engineering and a habit of turning manual chores into scripts.</p>
       <div class="cluster">
         <a class="button green" href="https://github.com/brechtopstaele" target="_blank" rel="noopener">GitHub</a>
         <a class="button cyan" href="https://www.linkedin.com/in/brecht-opstaele/" target="_blank" rel="noopener">LinkedIn</a>
@@ -59,8 +64,8 @@
 
   <main id="top">
     <!-- Experience -->
-    <section id="experience" class="container mt-3">
-      <h2>Experience</h2>
+    <section id="experience" class="container mt-3 reveal" style="--reveal-delay: 0.12s">
+      <h2>Work experience</h2>
       <div class="grid auto-fit">
         <article class="card">
           <div class="title">R&D Firmware Engineer — Summa NV</div>
@@ -79,13 +84,19 @@
           <div class="subtitle">2021</div>
           <p>Built a math exercise platform using YAML‑like code and LaTeX.</p>
         </article>
+      </div>
+    </section>
 
+    <!-- Volunteer Experience -->
+    <section id="volunteering" class="container mt-3 reveal" style="--reveal-delay: 0.15s">
+      <h2>Volunteer experience</h2>
+      <div class="grid auto-fit">
         <article class="card">
-          <div class="title">District Commissioner — Scouts en Gidsen Vlaanderen (Volunteer)</div>
+          <div class="title">District Commissioner — Scouts en Gidsen Vlaanderen</div>
           <div class="subtitle">2025 — present</div>
           <p>First‑line support for eight scout groups; organise meetings and cross‑group events.</p>
         </article>
-        
+
         <article class="card">
           <div class="title">Group Leader — Scouts ’t Hoekske</div>
           <div class="subtitle">2019 — 2024</div>
@@ -101,86 +112,71 @@
     </section>
 
     <!-- Education -->
-    <section id="education" class="container mt-3">
+    <section id="education" class="container mt-3 reveal" style="--reveal-delay: 0.2s">
       <h2>Education</h2>
-      
-<div class="edu-h-timeline" role="list">
-    <!-- High school (6 years) -->
-    <article class="edu-seg" style="--years: 6" role="listitem" tabindex="0">
-      <span class="edu-track"></span>
-      <span class="edu-dot"></span>
-      <div class="edu-label">
-        ASO Latin–Mathematics
-      </div>
-      <div class="edu-pill">2012–2018</div>
 
-      <div class="edu-card card">
-        <header class="edu-head">
-          <h3 class="title m-0">Latin–Mathematics</h3>
-          <span class="edu-meta">Emmaüsinstituut</span>
-        </header>
-        <p class="m-0 text-muted">General secondary education combining classical studies with STEM subjects.</p>
-      </div>
-    </article>
+      <div class="edu-timeline" role="list">
+        <div class="edu-col" style="--years: 6">
+          <button class="edu-node" role="listitem" aria-expanded="false" data-target="edu-1">
+            <span class="edu-track"></span>
+            <span class="edu-dot"></span>
+            <span class="edu-pill">2012–2018</span>
+            <span class="edu-label">ASO Latin–Mathematics</span>
+          </button>
+          <div class="edu-detail" id="edu-1">
+            <div class="edu-detail__head">
+              <h3 class="title m-0">Latin–Mathematics</h3>
+              <span class="edu-meta">Emmaüsinstituut</span>
+            </div>
+            <p class="m-0 text-muted">General secondary education combining classical studies with STEM subjects.</p>
+          </div>
+        </div>
 
-    <!-- Master (5 years) -->
-    <article class="edu-seg" style="--years: 5" role="listitem" tabindex="0">
-      <span class="edu-track"></span>
-      <span class="edu-dot"></span>
-      <div class="edu-label">
-        Engineering Technology
-      </div>
-      <div class="edu-pill">2018–2023</div>
+        <div class="edu-col" style="--years: 5">
+          <button class="edu-node" role="listitem" aria-expanded="false" data-target="edu-2">
+            <span class="edu-track"></span>
+            <span class="edu-dot"></span>
+            <span class="edu-pill">2018–2023</span>
+            <span class="edu-label">Engineering Technology</span>
+            <span class="edu-honor">Cum laude</span>
+          </button>
+          <div class="edu-detail" id="edu-2">
+            <div class="edu-detail__head">
+              <h3 class="title m-0">Master of Engineering Technology: Electronics &amp; ICT</h3>
+              <span class="edu-meta">KU Leuven</span>
+            </div>
+            <span class="badge">Cum laude</span>
+            <p class="mb-0"><strong>Thesis:</strong> QUIC traffic analysis to uniquely identify devices and services.</p>
+          </div>
+        </div>
 
-      <div class="edu-card card">
-        <header class="edu-head">
-          <h3 class="title m-0">Master of Engineering Technology: Electronics & ICT</h3>
-          <span class="edu-meta">KU Leuven • <span class="badge">Cum laude</span></span>
-        </header>
-        <p class="m-0"><strong>Thesis:</strong> QUIC traffic analysis to uniquely identify devices and services.</p>
-      </div>
-    </article>
-
-    <!-- Advanced Master (1 year) -->
-    <article class="edu-seg" style="--years: 1" role="listitem" tabindex="0">
-      <span class="edu-track"></span>
-      <span class="edu-dot"></span>
-      <span class="edu-dot end"></span>
-      <div class="edu-label">
-        Space Studies
-      </div>
-      <div class="edu-pill">2023–2024</div>
-
-      <div class="edu-card card">
-        <header class="edu-head">
-          <h3 class="title m-0">Advanced Master of Space Studies</h3>
-          <span class="edu-meta">KU Leuven • <span class="badge green">Magna cum laude</span></span>
-        </header>
-        <p class="m-0"><strong>Thesis:</strong> OTA update system for a 3U CubeSat.</p>
-      </div>
-    </article>
-  </div>
-
-
-      <div class="grid auto-fit">
-        <article class="card">
-          <div class="title">Advanced Master of Space Studies — KU Leuven</div>
-          <div class="subtitle"><span class="badge">Magna cum laude</span> • 2023 — 2024</div>
-          <p>Thesis: Design & implementation of a robust, flexible OTA update system for a 3U CubeSat.</p>
-        </article>
-        <article class="card">
-          <div class="title">Master of Engineering Technology: Electronics & ICT — KU Leuven</div>
-          <div class="subtitle"><span class="badge green">Cum laude</span> • 2018 — 2023</div>
-          <p>Thesis: QUIC traffic analysis to uniquely identify devices and services.</p>
-        </article>
+        <div class="edu-col" style="--years: 1">
+          <button class="edu-node" role="listitem" aria-expanded="false" data-target="edu-3">
+            <span class="edu-track"></span>
+            <span class="edu-dot"></span>
+            <span class="edu-dot end"></span>
+            <span class="edu-pill">2023–2024</span>
+            <span class="edu-label">Space Studies</span>
+            <span class="edu-honor edu-honor--top">Magna cum laude</span>
+          </button>
+          <div class="edu-detail" id="edu-3">
+            <div class="edu-detail__head">
+              <h3 class="title m-0">Advanced Master of Space Studies</h3>
+              <span class="edu-meta">KU Leuven</span>
+            </div>
+            <span class="badge green">Magna cum laude</span>
+            <p class="mb-0"><strong>Thesis:</strong> Design &amp; implementation of a robust, flexible OTA update system for a 3U CubeSat.</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Projects -->
-    <section id="projects" class="container mt-3">
+    <section id="projects" class="container mt-3 reveal" style="--reveal-delay: 0.24s">
       <h2>Projects</h2>
       <div class="grid auto-fit">
         <article class="card">
+          <span class="project-tag">Embedded · Home Assistant</span>
           <div class="title">ESP32 air quality and temperature sensor</div>
           <div class="subtitle">Embedded systems and Proxmox</div>
           <p>Setting up and using an ESP32 with an air quality sensor to show readings in Home Assistant running on Proxmox.</p>
@@ -190,6 +186,7 @@
         </article>
 
         <article class="card">
+          <span class="project-tag">Embedded · MQTT · Grafana</span>
           <div class="title">ESP32 temperature and current sensors</div>
           <div class="subtitle">Embedded systems and Docker</div>
           <p>Setting up and using ESP32's with temperature and current sensors to show readings in a Grafana dashboard via MQTT.</p>
@@ -197,8 +194,9 @@
             <a class="button" href="https://brechtopstaele.github.io/projects/temp-and-curr-sensors/" target="_blank" rel="noopener">View Project</a>
           </div>
         </article>
-        
+
         <article class="card">
+          <span class="project-tag">Python · Flask</span>
           <div class="title">WhatToPack</div>
           <div class="subtitle">GitHub</div>
           <p>A travel packing assistant implemented with Flask.</p>
@@ -208,6 +206,7 @@
         </article>
 
         <article class="card">
+          <span class="project-tag">Thesis · CubeSat</span>
           <div class="title">OTA update system for CubeSats</div>
           <div class="subtitle">Thesis</div>
           <p>Exploration of resilient over‑the‑air strategies tailored to small satellite constraints.</p>
@@ -217,6 +216,7 @@
         </article>
 
         <article class="card">
+          <span class="project-tag">Thesis · Networking</span>
           <div class="title">QUIC traffic identification</div>
           <div class="subtitle">Thesis</div>
           <p>Analyzed device/service identification via QUIC flow features and patterns.</p>
@@ -228,44 +228,63 @@
     </section>
 
     <!-- Skills -->
-    <section id="skills" class="container mt-3">
+    <section id="skills" class="container mt-3 reveal" style="--reveal-delay: 0.3s">
       <h2>Skills</h2>
-      <div class="grid auto-fit">
-        <article class="card">
-          <div class="title">Technical</div>
-          <p class="mb-1">
-            <span class="badge">C / STM32</span>
-            <span class="badge cyan">Python</span>
-            <span class="badge">MQTT</span>
-            <span class="badge orange">Azure DevOps</span>
-            <span class="badge">Docker & VMs</span>
-            <span class="badge green">Beckhoff PLC</span>
-          </p>
-          <p class="text-muted">Embedded development, automation, tooling & CI/CD.</p>
-        </article>
-        <article class="card">
-          <div class="title">Core strengths</div>
-          <p class="mb-1">
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group__head">
+            <span class="skill-group__icon" aria-hidden="true">&#9881;</span>
+            <span class="skill-group__title">Embedded &amp; firmware</span>
+          </div>
+          <ul class="skill-list">
+            <li><span class="skill-name">C / STM32</span><span class="skill-bar"><span style="width:85%"></span></span></li>
+            <li><span class="skill-name">MQTT</span><span class="skill-bar"><span style="width:75%"></span></span></li>
+            <li><span class="skill-name">Beckhoff PLC</span><span class="skill-bar"><span style="width:60%"></span></span></li>
+          </ul>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group__head">
+            <span class="skill-group__icon" aria-hidden="true">&#9655;</span>
+            <span class="skill-group__title">Automation &amp; tooling</span>
+          </div>
+          <ul class="skill-list">
+            <li><span class="skill-name">Python</span><span class="skill-bar"><span style="width:85%"></span></span></li>
+            <li><span class="skill-name">Docker &amp; VMs</span><span class="skill-bar"><span style="width:75%"></span></span></li>
+            <li><span class="skill-name">Azure DevOps</span><span class="skill-bar"><span style="width:65%"></span></span></li>
+          </ul>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group__head">
+            <span class="skill-group__icon" aria-hidden="true">&#9737;</span>
+            <span class="skill-group__title">Core strengths</span>
+          </div>
+          <div class="skill-tags">
             <span class="badge">Problem solving</span>
             <span class="badge">Critical thinking</span>
             <span class="badge">Teamwork</span>
             <span class="badge">Quick learner</span>
-            <span class="badge">Optimizing & automating</span>
-          </p>
-        </article>
-        <article class="card">
-          <div class="title">Languages</div>
-          <p class="mb-1">
-            <span class="badge">Dutch (native)</span>
-            <span class="badge">English</span>
-            <span class="badge">French</span>
-            <span class="badge">German (basic)</span>
-          </p>
-        </article>
+            <span class="badge">Optimizing &amp; automating</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group__head">
+            <span class="skill-group__icon" aria-hidden="true">&#9990;</span>
+            <span class="skill-group__title">Languages</span>
+          </div>
+          <ul class="skill-list">
+            <li><span class="skill-name">Dutch</span><span class="skill-bar"><span style="width:100%"></span></span></li>
+            <li><span class="skill-name">English</span><span class="skill-bar"><span style="width:90%"></span></span></li>
+            <li><span class="skill-name">French</span><span class="skill-bar"><span style="width:60%"></span></span></li>
+            <li><span class="skill-name">German</span><span class="skill-bar"><span style="width:30%"></span></span></li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <section id="photography" class="container mt-3">
+    <section id="photography" class="container mt-3 reveal" style="--reveal-delay: 0.36s">
       <div class="image-container card">
         <img class="rounded" src="/static/images/2025-12-02-BZ6_1034.jpg" alt="Mountain peak in the clouds">
         <div class="image-overlay">
@@ -277,25 +296,69 @@
     </section>
   </main>
 
-  <footer class="container footer center">
-    <span class="badge">v1.0</span>
-    <span class="ml-1">© <span id="year"></span> Brecht Opstaele</span>
+  <footer class="container footer">
+    <div class="footer-row">
+      <div>
+        <span class="badge">v1.0</span>
+        <span class="ml-1">© <span id="year"></span> Brecht Opstaele</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/brechtopstaele" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/brecht-opstaele/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </div>
   </footer>
 
   <script>
-    // Theme toggle (respects system pref by default, allows override)
-    const btn = document.getElementById('themeToggle');
-    const root = document.documentElement;
-    const stored = localStorage.getItem('theme');
-    if (stored) root.dataset.theme = stored;
-    btn.addEventListener('click', () => {
-      const current = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      root.dataset.theme = current;
-      localStorage.setItem('theme', current);
-    });
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Boot loader: hide once page is ready
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('boot-loader');
+      setTimeout(() => loader.classList.add('is-hidden'), 350);
+      setTimeout(() => loader.remove(), 900);
+    });
+
+    // Education timeline: click to toggle, auto-open on scroll into view
+    const eduCols = document.querySelectorAll('.edu-col');
+
+    eduCols.forEach(col => {
+      const node = col.querySelector('.edu-node');
+      const detail = col.querySelector('.edu-detail');
+      node.addEventListener('click', () => {
+        const isOpen = node.getAttribute('aria-expanded') === 'true';
+        node.setAttribute('aria-expanded', String(!isOpen));
+        detail.classList.toggle('is-open', !isOpen);
+      });
+    });
+
+    if ('IntersectionObserver' in window) {
+      const eduObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            eduCols.forEach((col, i) => {
+              const node = col.querySelector('.edu-node');
+              const detail = col.querySelector('.edu-detail');
+              setTimeout(() => {
+                node.setAttribute('aria-expanded', 'true');
+                detail.classList.add('is-open');
+              }, i * 180);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.35 });
+
+      const eduTimeline = document.querySelector('.edu-timeline');
+      if (eduTimeline) eduObserver.observe(eduTimeline);
+    } else {
+      eduCols.forEach(col => {
+        col.querySelector('.edu-node').setAttribute('aria-expanded', 'true');
+        col.querySelector('.edu-detail').classList.add('is-open');
+      });
+    }
   </script>
 </body>
 </html>
-
